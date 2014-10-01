@@ -9,6 +9,11 @@ GET     /                                       App.Index
 GET     /register                               Register.Index
 POST    /register                               Register.RegisterPost
 
+GET     /login                                  Login.Index
+POST    /login                                  Login.PostLogin
+
+GET     /logout                                 Login.Logout
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 

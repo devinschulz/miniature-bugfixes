@@ -5,11 +5,11 @@
 {{end}}
 
 {{if or .errors .flash.error}}
-<div class="alert alert-error" role="alert">
+<div class="alert alert-danger" role="alert">
 	{{if .flash.error}}
 		{{.flash.error}}
 	{{end}}
-	<ul style="margin-top:10px;">
+	<ul>
 		{{range .errors}}
 			<li>{{.}}</li>
 		{{end}}
