@@ -3,7 +3,6 @@ package controllers
 import (
 	"code.google.com/p/go.crypto/bcrypt"
 	"github.com/iDevSchulz/miniature-bugfixes/app/models"
-	"github.com/jinzhu/gorm"
 	"github.com/revel/revel"
 )
 
@@ -12,7 +11,8 @@ type Register struct {
 }
 
 func (c Register) Index() revel.Result {
-	return c.Render()
+	auth := c.Auth()
+	return c.Render(auth)
 }
 
 func (c Register) RegisterPost(user *models.User, verifyPassword string) revel.Result {
@@ -27,7 +27,7 @@ func (c Register) RegisterPost(user *models.User, verifyPassword string) revel.R
 	}
 
 	// Check to see if email is not in the DB already
-	UE, err := GetUserByEmail(c.Txn, user.Email)
+	UE, err := c.GetUserByEmail(c.Txn, user.Email)
 	checkERROR(err)
 
 	if UE != nil {
@@ -43,23 +43,9 @@ func (c Register) RegisterPost(user *models.User, verifyPassword string) revel.R
 	// Create the record
 	c.Txn.Create(user)
 
+	// Set User Session
+	c.Session["user"] = user.Email
+	c.Flash.Success("Welcome " + user.Name)
+
 	return c.Redirect(App.Index)
-}
-
-func GetUserByEmail(db *gorm.DB, email string) (*models.User, error) {
-	var user models.User
-	err := db.Where(&models.User{Email: email}).First(&user).Error
-	if err != nil {
-		return nil, err
-	}
-	return &user, nil
-}
-
-func GetUserById(db *gorm.DB, id int64) (*models.User, error) {
-	var user models.User
-	err := db.Where(&models.User{Id: id}).First(&user).Error
-	if err != nil {
-		return nil, err
-	}
-	return &user, nil
 }
