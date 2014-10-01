@@ -1,0 +1,28 @@
+{{set . "title" "Home"}}
+{{template "header.html" .}}
+
+{{if not .auth }}
+<form action="{{url "Login.PostLogin"}}" method="post">
+
+  {{with $field := field "email" .}}
+  <div class="form-group {{if $field.Error}}has-error{{end}}">
+    <label class="control-label" for="{{$field.Name}}">Email</label>
+    <input type="email" name="{{$field.Name}}" value="{{$field.Flash}}">
+    {{if $field.Error}}<p class="help-block">{{$field.Error}}</p>{{end}}
+  </div>  
+  {{end}}
+  
+  {{with $field := field "password" .}}
+  <div class="form-group {{if $field.Error}}has-error{{end}}">
+    <label class="control-label" for="{{$field.Name}}">Password</label>
+    <input type="password" name="{{$field.Name}}" value="{{$field.Flash}}">
+    {{if $field.Error}}<p class="help-block">{{$field.Error}}</p>{{end}}
+  </div>  
+  {{end}}
+
+  <label for="remember"><input type="checkbox" name="remember" value="true" id="remember"> Remember Me</label>
+  <input type="submit" value="login" class="btn btn-primary">
+</form>
+{{end}}
+
+{{template "footer.html" .}}
