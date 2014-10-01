@@ -42,7 +42,10 @@ func (c Login) PostLogin(email, password string, remember bool) revel.Result {
 			c.Flash.Success("Welcome Back " + user.Name)
 			return c.Redirect(App.Index)
 		}
+
 		c.Flash.Error("Incorrect Password")
+		c.Validation.Keep()
+		c.FlashParams()
 		return c.Redirect(Login.Index)
 	}
 	c.Flash.Error("Email Not Found")
