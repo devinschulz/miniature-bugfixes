@@ -16,6 +16,10 @@ GET     /logout                                 Login.Logout
 GET     /settings                               Settings.Index
 POST    /settings                               Settings.SettingsPost
 
+GET     /articles                               Articles.Index
+GET     /articles/new                           Articles.New
+POST    /articles/new                           Articles.NewPost
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 
