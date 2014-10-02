@@ -36,8 +36,10 @@ func InitDB() {
 	Gdb.SetLogger(gorm.Logger{r.INFO})
 	Gdb.LogMode(true)
 
-	Gdb.AutoMigrate(&models.User{})
+	Gdb.AutoMigrate(&models.User{}, &models.Article{}, &models.Category{}, &models.Tag{})
 	Gdb.Model(&models.User{}).AddUniqueIndex("idx_user_email", "email")
+	Gdb.Model(&models.Article{}).AddUniqueIndex("idx_title", "title")
+	Gdb.Model(&models.Article{}).AddUniqueIndex("idx_slug", "slug")
 
 	r.INFO.Println("Connection made to DB")
 }
