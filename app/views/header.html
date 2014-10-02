@@ -19,6 +19,14 @@
     <nav>
       <ul>
         <li><a href="{{url "App.Index"}}">Home</a></li>
+        <li>
+          <a href="{{url "Articles.Index"}}">Articles</a>
+          {{if .auth}}
+          <ul>
+            <li><a href="{{url "Articles.New"}}">New Article</a></li>
+          </ul>
+          {{end}}
+        </li>
         {{if .auth}}
         <li><a href="{{url "Settings.Index"}}">Settings</a></li>
         <li><a href="{{url "Login.Logout"}}">Logout</a></li>

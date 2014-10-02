@@ -1,0 +1,30 @@
+<form action="{{ .action }}" method="post">
+  
+  {{with $field := field "article.Title" .}}
+  <div class="form-group {{if $field.Error}}has-error{{end}}">
+    <label class="control-label" for="{{$field.Name}}">Title</label>
+    <input type="text" name="{{$field.Name}}" value="{{if $field.Flash}}{{$field.Flash}}{{else}}{{$field.Value}}{{end}}">
+    {{if $field.Error}}<p class="help-block">{{$field.Error}}</p>{{end}}
+  </div>  
+  {{end}}
+
+  {{with $field := field "article.Slug" .}}
+  <div class="form-group {{if $field.Error}}has-error{{end}}">
+    <label class="control-label" for="{{$field.Name}}">Slug</label>
+    <input type="text" name="{{$field.Name}}" value="{{if $field.Flash}}{{$field.Flash}}{{else}}{{$field.Value}}{{end}}">
+    {{if $field.Error}}<p class="help-block">{{$field.Error}}</p>{{end}}
+  </div>  
+  {{end}}
+
+  {{with $field := field "article.Content" .}}
+  <div class="form-group {{if $field.Error}}has-error{{end}}">
+    <label class="control-label" for="{{$field.Name}}">Content</label>
+    <textarea name="{{$field.Name}}" id="{{$field.Name}}" cols="30" rows="10">
+      {{if $field.Flash}}{{$field.Flash}}{{else}}{{$field.Value}}{{end}}
+    </textarea>
+    {{if $field.Error}}<p class="help-block">{{$field.Error}}</p>{{end}}
+  </div>  
+  {{end}}
+
+  <input type="submit" value="{{ .submitButton }}"> 
+</form>
