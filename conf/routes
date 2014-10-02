@@ -11,8 +11,10 @@ POST    /register                               Register.RegisterPost
 
 GET     /login                                  Login.Index
 POST    /login                                  Login.PostLogin
-
 GET     /logout                                 Login.Logout
+
+GET     /settings                               Settings.Index
+POST    /settings                               Settings.SettingsPost
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
