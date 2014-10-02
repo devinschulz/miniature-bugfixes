@@ -1,7 +1,10 @@
-{{set . "title" "Home"}}
+{{set . "title" "Login"}}
 {{template "header.html" .}}
 
 {{if not .auth }}
+
+<h1>Login</h1>
+
 <form action="{{url "Login.PostLogin"}}" method="post">
 
   {{with $field := field "email" .}}
