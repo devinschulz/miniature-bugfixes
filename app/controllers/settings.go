@@ -48,7 +48,6 @@ func (c Settings) SettingsPost(user *models.User, verifyPassword string) revel.R
 			c.FlashParams()
 			return c.Redirect(Settings.Index)
 		}
-
 		bcryptPassword, _ := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
 		user.EncryptedPassword = bcryptPassword
 	} else {
