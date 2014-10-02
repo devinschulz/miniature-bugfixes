@@ -22,6 +22,9 @@ func (u *User) Validate(v *revel.Validation) {
 	v.Email(u.Email).
 		Message("Valid Email Required").
 		Key("user.Email")
+	v.Required(u.Name).
+		Message("Name Required").
+		Key("user.Name")
 }
 
 func (u *User) RegistrationValidate(v *revel.Validation) {
