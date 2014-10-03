@@ -1,0 +1,7 @@
+{{set . "title" .article.Title}}
+{{template "header.html" .}}
+
+<h1>{{.article.Title}}</h1>
+{{.article.Content}}
+
+{{template "footer.html" .}}
