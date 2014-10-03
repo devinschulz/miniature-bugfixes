@@ -35,6 +35,15 @@ func (article *Article) Validate(v *revel.Validation) {
 	v.Required(article.Title).
 		Message("Title is Required").
 		Key("article.Title")
+	v.MinSize(article.Title, 3).
+		Message("Title must be at least 3 characters").
+		Key("article.Title")
+	v.Required(article.Slug).
+		Message("Slug is Required").
+		Key("article.Slug")
+	v.MinSize(article.Slug, 3).
+		Message("Slug must be at least 3 characters").
+		Key("article.Slug")
 	v.Required(article.Content).
 		Message("Content is Required").
 		Key("article.Content")
