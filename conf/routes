@@ -17,8 +17,11 @@ GET     /settings                               Settings.Index
 POST    /settings                               Settings.SettingsPost
 
 GET     /articles                               Articles.Index
+GET     /articles/:slug                         Articles.Show
 GET     /articles/new                           Articles.New
-POST    /articles/new                           Articles.NewPost
+POST    /articles/new                           Articles.NewArticle
+GET     /articles/edit/:id                      Articles.Edit
+POST    /articles/update/:id                    Articles.UpdateArticle
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
