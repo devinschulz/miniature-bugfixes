@@ -3,9 +3,15 @@
 
 <h1>Articles</h1>
 
+{{$auth := .auth}}
 {{range .articles}}
   <section>
-    <h2>{{.Title}}</h2>
+    <h2><a href="/articles/{{.Slug}}">{{.Title}}</a></h2>
+    <ul>
+    {{if $auth}}
+      <li><a href="/articles/edit/{{.Id}}">Edit</a></li>
+    {{end}}
+    </ul>
   </section>
 {{end}}
 
