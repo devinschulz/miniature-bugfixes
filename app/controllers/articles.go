@@ -5,6 +5,7 @@ import (
 	"github.com/iDevSchulz/miniature-bugfixes/app/models"
 	"github.com/jinzhu/gorm"
 	"github.com/revel/revel"
+	"log"
 	"time"
 )
 
@@ -12,10 +13,13 @@ type Articles struct {
 	App
 }
 
+const trimLength = 300
+
 func (c Articles) Index() revel.Result {
 	auth := c.Auth()
-	var articles []models.Article
-	c.Txn.Find(&articles)
+	articles := GetArticlesByDate(c.Txn)
+
+	log.Println("%+v\n", articles)
 	return c.Render(auth, articles)
 }
 
@@ -33,7 +37,6 @@ func (c Articles) New() revel.Result {
 
 func (c Articles) Edit(id int64) revel.Result {
 	// TODO: Check for empty id
-
 	auth := c.Auth()
 
 	if auth {
@@ -134,6 +137,7 @@ func (c Articles) UpdateArticle(article models.Article, id int64) revel.Result {
 	article.UpdatedAt = time.Now()
 
 	c.Txn.Save(article)
+
 	c.Flash.Success("Article Updated")
 
 	return c.Redirect(currentPath)
@@ -152,6 +156,7 @@ func GetArticleByTitle(db *gorm.DB, title string) (*models.Article, error) {
 	if err != nil {
 		return nil, err
 	}
+	article.AddArticleMeta(db)
 	return &article, nil
 }
 
@@ -161,6 +166,7 @@ func GetArticleBySlug(db *gorm.DB, slug string) (*models.Article, error) {
 	if err != nil {
 		return nil, err
 	}
+	article.AddArticleMeta(db)
 	return &article, nil
 }
 
@@ -170,5 +176,18 @@ func GetArticleById(db *gorm.DB, id int64) (*models.Article, error) {
 	if err != nil {
 		return nil, err
 	}
+	article.AddArticleMeta(db)
 	return &article, nil
+}
+
+func GetArticlesByDate(db *gorm.DB) []models.Article {
+	var articles []models.Article
+	db.Find(&articles)
+
+	for _, a := range articles {
+		a.AddArticleMeta(db)
+		log.Println(articles)
+	}
+
+	return articles
 }

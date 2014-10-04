@@ -1,7 +1,10 @@
 package models
 
 import (
+	"github.com/jinzhu/gorm"
 	"github.com/revel/revel"
+	"github.com/russross/blackfriday"
+	"html/template"
 	"time"
 )
 
@@ -17,6 +20,7 @@ type Article struct {
 	UpdatedAt   time.Time
 	PublishedAt time.Time
 	Tags        []Tag
+	Meta        map[string]interface{} `sql:"-"`
 }
 
 type Category struct {
@@ -47,4 +51,18 @@ func (article *Article) Validate(v *revel.Validation) {
 	v.Required(article.Content).
 		Message("Content is Required").
 		Key("article.Content")
+}
+
+const trimLength = 300
+
+func (article *Article) AddArticleMeta(db *gorm.DB) {
+	if article.Meta == nil {
+		article.Meta = make(map[string]interface{})
+	}
+	article.Meta["markdown"] = template.HTML(string(blackfriday.MarkdownBasic([]byte(article.Content))))
+	if len(article.Content) > trimLength {
+		article.Meta["teaser"] = template.HTML(string(blackfriday.MarkdownBasic([]byte(article.Content[0:trimLength]))))
+	} else {
+		article.Meta["teaser"] = template.HTML(string(blackfriday.MarkdownBasic([]byte(article.Content[0:len(article.Content)]))))
+	}
 }
