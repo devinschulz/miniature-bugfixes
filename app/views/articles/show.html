@@ -2,6 +2,11 @@
 {{template "header.html" .}}
 
 <h1>{{.article.Title}}</h1>
-{{.article.Content}}
+<ul>
+  {{if .auth}}
+    <li><a href="/articles/edit/{{.article.Id}}">Edit</a></li>
+  {{end}}
+</ul>
+{{.article.Meta.markdown}}
 
 {{template "footer.html" .}}
