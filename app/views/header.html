@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="shortcut icon" type="image/png" href="/public/img/favicon.png">
-    <script src="/public/js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <!-- <script src="/public/js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script> -->
     {{range .moreStyles}}
       <link rel="stylesheet" type="text/css" href="/public/{{.}}">
     {{end}}
@@ -28,6 +28,12 @@
           {{end}}
         </li>
         {{if .auth}}
+        <li>
+          <a href="{{url "Categories.Index"}}">Categories</a>
+          <ul>
+            <li><a href="{{url "Categories.New"}}">New Category</a></li>
+          </ul>
+        </li>
         <li><a href="{{url "Settings.Index"}}">Settings</a></li>
         <li><a href="{{url "Login.Logout"}}">Logout</a></li>
         {{else}}

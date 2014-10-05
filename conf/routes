@@ -23,6 +23,10 @@ GET     /articles/edit/:id                      Articles.Edit
 POST    /articles/update/:id                    Articles.UpdateArticle
 GET     /articles/:slug                         Articles.Show
 
+GET     /categories                             Categories.Index
+GET     /categories/new                         Categories.New
+POST    /categories/new                         Categories.NewCategory
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 
